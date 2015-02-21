@@ -29,7 +29,7 @@ let make_header conf source filename content =
 
 let gen_public_class name content =
   List.concat [
-    [ (0, "public class " ^ (snake_to_upper name) ^ " implements UserDefinedMessage {") ];
+    [ (0, "public class " ^ (snake_to_upper name) ^ " implements UserDefinedMessage, Serializable {") ];
     indent_lines 1 content;
     [ (0, "};") ]
   ]
@@ -356,6 +356,7 @@ let gen_message m conf source =
       [gen_package conf;
        gen_import_for_message field_types;
        [
+         (0, "import java.io.Serializable;");
          (0, "import org.msgpack.annotation.Message;");
          (0, "import org.msgpack.type.ArrayValue;");
          (0, "import us.jubat.common.MessageStringGenerator;");
